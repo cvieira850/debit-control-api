@@ -100,4 +100,10 @@ describe('DbAddDebit usecase', () => {
     const debit = await sut.add(makeFakeDebitData())
     expect(debit).toBeNull()
   })
+
+  test('Should return a debit on success', async () => {
+    const { sut } = makeSut()
+    const debit = await sut.add(makeFakeDebitData())
+    expect(debit).toEqual(makeFakeDebit())
+  })
 })
