@@ -93,4 +93,11 @@ describe('DbAddDebit usecase', () => {
     await sut.add(makeFakeDebitData())
     expect(loadSpy).toBeCalledWith('any_clientId')
   })
+
+  test('Should return null if  LoadClientByIdRepository returns null', async () => {
+    const { sut,loadClientByIdRepositoryStub } = makeSut()
+    jest.spyOn(loadClientByIdRepositoryStub,'loadById').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+    const debit = await sut.add(makeFakeDebitData())
+    expect(debit).toBeNull()
+  })
 })
