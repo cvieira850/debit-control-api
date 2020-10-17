@@ -1,7 +1,7 @@
 import { AddDebitController } from './add-debit-controller'
 import { AddDebitModel, DebitModel, AddDebit } from './add-debit-protocols'
 import { HttpRequest } from '../../protocols'
-import { serverError } from '../../helpers/http/http-helpers'
+import { serverError, ok } from '../../helpers/http/http-helpers'
 import { ServerError } from '../../errors'
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -58,5 +58,11 @@ describe('AddDebit Controller', () => {
     })
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok(makeFakeDebit()))
   })
 })
