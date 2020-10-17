@@ -1,12 +1,12 @@
 import { AddDebitController } from './add-debit-controller'
-import { AddDebitModel, DebitModel, AddDebit } from './add-debit-protocols'
+import { AddDebitModel, DebitModel, AddDebit, ClientModel, LoadClientById } from './add-debit-protocols'
 import { HttpRequest } from '../../../protocols'
 import { serverError, ok } from '../../../helpers/http/http-helpers'
 import { ServerError } from '../../../errors'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
-    userId: 'any_id',
+    clientId: 'any_clientId',
     reason: 'any_reason',
     date: 'any_date',
     value: 'any_value'
@@ -15,10 +15,34 @@ const makeFakeRequest = (): HttpRequest => ({
 
 const makeFakeDebit = (): DebitModel => ({
   id: 'any_id',
-  userId: 'any_userid',
+  clientId: 'any_clientId',
   reason: 'any_reason',
   date: 'any_date',
   value: 'any_value'
+})
+
+const makeFakeClient = (): ClientModel => ({
+  id: 'any_clientId',
+  name: 'any_name',
+  username: 'any_username',
+  email: 'any_email@email.com',
+  address: {
+    street: 'any_street',
+    suite: 'any_suite',
+    city: 'any_city',
+    zipcode: 'any_zipcode',
+    geo: {
+      lat: 'any_lat' ,
+      lng: 'any_lng'
+    }
+  },
+  phone: 'any_phone',
+  website: 'any_website',
+  company: {
+    name: 'any_companyname',
+    catchPhrase: 'any_catchphrase',
+    bs: 'any_bs'
+  }
 })
 
 const makeAddDebit = (): AddDebit => {
@@ -29,37 +53,60 @@ const makeAddDebit = (): AddDebit => {
   }
   return new AddDebitStub()
 }
+const makeLoadClientById = (): LoadClientById => {
+  class LoadClientByIdStub implements LoadClientById {
+    async load (id: string): Promise<ClientModel> {
+      return new Promise(resolve => resolve(makeFakeClient()))
+    }
+  }
+  return new LoadClientByIdStub()
+}
 interface SutTypes {
   sut: AddDebitController
   addDebitStub: AddDebit
+  loadClientByIdStub: LoadClientById
 }
 
 const makeSut = (): SutTypes => {
   const addDebitStub = makeAddDebit()
-  const sut = new AddDebitController(addDebitStub)
+  const loadClientByIdStub = makeLoadClientById()
+  const sut = new AddDebitController(addDebitStub,loadClientByIdStub)
   return {
     sut,
-    addDebitStub
+    addDebitStub,
+    loadClientByIdStub
   }
 }
 
 describe('AddDebit Controller', () => {
-  test('Should AddDebit Controller calls AddDebit with correct values', async () => {
-    const { sut, addDebitStub } = makeSut()
-    const addSpy = jest.spyOn(addDebitStub,'add')
-    await sut.handle(makeFakeRequest())
+  describe('AddDebit', () => {
+    test('Should AddDebit Controller calls AddDebit with correct values', async () => {
+      const { sut, addDebitStub } = makeSut()
+      const addSpy = jest.spyOn(addDebitStub,'add')
+      await sut.handle(makeFakeRequest())
 
-    expect(addSpy).toBeCalledWith(makeFakeRequest().body)
-  })
-  test('Should return 500 if AddDebit throws', async () => {
-    const { sut, addDebitStub } = makeSut()
-    jest.spyOn(addDebitStub,'add').mockImplementationOnce(() => {
-      throw new Error()
+      expect(addSpy).toBeCalledWith(makeFakeRequest().body)
     })
-    const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+
+    test('Should return 500 if AddDebit throws', async () => {
+      const { sut, addDebitStub } = makeSut()
+      jest.spyOn(addDebitStub,'add').mockImplementationOnce(() => {
+        throw new Error()
+      })
+      const httpResponse = await sut.handle(makeFakeRequest())
+      expect(httpResponse).toEqual(serverError(new ServerError(null)))
+    })
   })
 
+  describe('LoadClientById', () => {
+    test('Should AddDebit Controller calls LoadClientById with correct id', async () => {
+      const { sut, loadClientByIdStub } = makeSut()
+      const loadSpy = jest.spyOn(loadClientByIdStub,'load')
+      await sut.handle(makeFakeRequest())
+
+      expect(loadSpy).toBeCalledWith('any_clientId')
+    })
+  })
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
