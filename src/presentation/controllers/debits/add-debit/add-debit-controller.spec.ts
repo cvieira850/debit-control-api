@@ -1,8 +1,8 @@
 import { AddDebitController } from './add-debit-controller'
 import { AddDebitModel, DebitModel, AddDebit } from './add-debit-protocols'
-import { HttpRequest } from '../../protocols'
-import { serverError, ok } from '../../helpers/http/http-helpers'
-import { ServerError } from '../../errors'
+import { HttpRequest } from '../../../protocols'
+import { serverError, ok } from '../../../helpers/http/http-helpers'
+import { ServerError } from '../../../errors'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
