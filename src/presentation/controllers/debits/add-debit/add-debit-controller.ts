@@ -1,6 +1,6 @@
 import { AddDebit, Controller, HttpResponse, HttpRequest,LoadClientById } from './add-debit-protocols'
-import { serverError,ok } from '../../../helpers/http/http-helpers'
-import { ServerError } from '../../../errors'
+import { serverError,ok, badRequest } from '../../../helpers/http/http-helpers'
+import { ServerError, InvalidParamError } from '../../../errors'
 export class AddDebitController implements Controller {
   constructor (
     private readonly addDebit: AddDebit,
@@ -9,9 +9,12 @@ export class AddDebitController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      await this.loadClientById.load(httpRequest.body.clientId)
-      const debit = await this.addDebit.add(httpRequest.body)
-      return ok(debit)
+      const client = await this.loadClientById.load(httpRequest.body.clientId)
+      if (client) {
+        const debit = await this.addDebit.add(httpRequest.body)
+        return ok(debit)
+      }
+      return badRequest(new InvalidParamError('clientId'))
     } catch (error) {
       return serverError(new ServerError(error))
     }
