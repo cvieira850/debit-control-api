@@ -106,6 +106,15 @@ describe('AddDebit Controller', () => {
 
       expect(loadSpy).toBeCalledWith('any_clientId')
     })
+
+    test('Should return 500 if AddDebit throws', async () => {
+      const { sut, loadClientByIdStub } = makeSut()
+      jest.spyOn(loadClientByIdStub,'load').mockImplementationOnce(() => {
+        throw new Error()
+      })
+      const httpResponse = await sut.handle(makeFakeRequest())
+      expect(httpResponse).toEqual(serverError(new ServerError(null)))
+    })
   })
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
