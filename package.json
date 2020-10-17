@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/cvieira850/debit-control-api.git",
   "author": "Caio Vieira <caiodmvieiragithub@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "git-commit-msg-linter": "^3.0.0"
+  }
 }
