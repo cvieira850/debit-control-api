@@ -1,6 +1,6 @@
 export interface DebitModel {
   id: string
-  userId: string
+  clientId: string
   reason: string
   date: string
   value: string
