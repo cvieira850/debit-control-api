@@ -1,8 +1,8 @@
 import { AddDebitController } from './add-debit-controller'
 import { AddDebitModel, DebitModel, AddDebit, ClientModel, LoadClientById } from './add-debit-protocols'
 import { HttpRequest } from '../../../protocols'
-import { serverError, ok } from '../../../helpers/http/http-helpers'
-import { ServerError } from '../../../errors'
+import { serverError, ok, badRequest } from '../../../helpers/http/http-helpers'
+import { ServerError, InvalidParamError } from '../../../errors'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
@@ -107,13 +107,20 @@ describe('AddDebit Controller', () => {
       expect(loadSpy).toBeCalledWith('any_clientId')
     })
 
-    test('Should return 500 if AddDebit throws', async () => {
+    test('Should return 500 if LoadClientById throws', async () => {
       const { sut, loadClientByIdStub } = makeSut()
       jest.spyOn(loadClientByIdStub,'load').mockImplementationOnce(() => {
         throw new Error()
       })
       const httpResponse = await sut.handle(makeFakeRequest())
       expect(httpResponse).toEqual(serverError(new ServerError(null)))
+    })
+
+    test('Should return 403 if LoadClientById returns null', async () => {
+      const { sut, loadClientByIdStub } = makeSut()
+      jest.spyOn(loadClientByIdStub,'load').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+      const httpResponse = await sut.handle(makeFakeRequest())
+      expect(httpResponse).toEqual(badRequest(new InvalidParamError('clientId')))
     })
   })
   test('Should return 200 if valid data is provided', async () => {
