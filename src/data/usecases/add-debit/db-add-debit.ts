@@ -7,8 +7,11 @@ export class DbAddDebit implements AddDebit {
   ) {}
 
   async add (debitData: AddDebitModel): Promise<DebitModel> {
-    await this.loadClientByIdRepository.loadById(debitData.clientId)
-    await this.addDebitRepository.add(debitData)
+    const client = await this.loadClientByIdRepository.loadById(debitData.clientId)
+    if (client) {
+      const debit = await this.addDebitRepository.add(debitData)
+      return debit
+    }
     return new Promise(resolve => resolve(null))
   }
 }
