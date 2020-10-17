@@ -1,3 +1,5 @@
 export * from '../../../domain/models/debit'
+export * from '../../../domain/models/client'
 export * from '../../../domain/usecases/add-debit'
 export * from '../../protocols/debit/add-debit-repository'
+export * from '../../protocols/client/load-client-by-id-repository'
