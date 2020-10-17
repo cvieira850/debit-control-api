@@ -1,6 +1,8 @@
 import { AddDebitController } from './add-debit-controller'
 import { AddDebitModel, DebitModel, AddDebit } from './add-debit-protocols'
 import { HttpRequest } from '../../protocols'
+import { serverError } from '../../helpers/http/http-helpers'
+import { ServerError } from '../../errors'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
@@ -48,5 +50,13 @@ describe('AddDebit Controller', () => {
     await sut.handle(makeFakeRequest())
 
     expect(addSpy).toBeCalledWith(makeFakeRequest().body)
+  })
+  test('Should return 500 if AddDebit throws', async () => {
+    const { sut, addDebitStub } = makeSut()
+    jest.spyOn(addDebitStub,'add').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
