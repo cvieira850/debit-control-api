@@ -46,4 +46,11 @@ describe('DbAddDebit usecase', () => {
     await sut.add(makeFakeDebitData())
     expect(loadSpy).toHaveBeenCalledWith(makeFakeDebitData())
   })
+
+  test('Should throws if AddDebitRepository throws', async () => {
+    const { sut,addDebitRepositoryStub } = makeSut()
+    jest.spyOn(addDebitRepositoryStub,'add').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    const promise = sut.add(makeFakeDebitData())
+    await expect(promise).rejects.toThrow()
+  })
 })
