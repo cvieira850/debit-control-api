@@ -1,0 +1,5 @@
+export * from '../../../protocols'
+export * from '../../../../domain/models/debit'
+export * from '../../../../domain/usecases/add-debit'
+export * from '../../../../domain/models/client'
+export * from '../../../../domain/usecases/load-client-by-id'
