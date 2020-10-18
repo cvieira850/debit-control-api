@@ -1,5 +1,6 @@
 import { LoadDebitByIdController } from './load-debit-by-id-controller'
 import { DebitModel, LoadDebitById, HttpRequest } from './load-debit-by-id-protocols'
+import { serverError } from '../../../helpers/http/http-helpers'
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
@@ -40,5 +41,14 @@ describe('LoadDebitById Controller', () => {
     const loadByIdSpy = jest.spyOn(loadDebitByIdStub,'load')
     await sut.handle(makeFakeRequest())
     expect(loadByIdSpy).toHaveBeenCalledWith('any_debit_id')
+  })
+
+  test('Should throw if LoadDebitById throws', async () => {
+    const { sut,loadDebitByIdStub } = makeSut()
+    jest.spyOn(loadDebitByIdStub,'load').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
