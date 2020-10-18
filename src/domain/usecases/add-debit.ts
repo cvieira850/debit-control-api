@@ -1,6 +1,6 @@
 import { DebitModel } from '../models/debit'
 export interface AddDebitModel {
-  userId: string
+  clientId: string
   reason: string
   date: string
   value: string
