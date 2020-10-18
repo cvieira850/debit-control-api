@@ -1,1 +1,1 @@
-export const tables: string[] = ['debits']
+export const tables: string[] = ['debits','errors']
