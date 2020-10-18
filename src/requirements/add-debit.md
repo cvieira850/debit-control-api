@@ -7,7 +7,7 @@
 4. ✅ Retorna 200 com o debito criado
 
 > ## Exceções:
-1. ⛔ Retorna erro 404 se a API não existir
+1. ✅ Retorna erro 404 se a API não existir
 1. ⛔ Retorna erro 400 se **clientId**,**reason**, **date**, **value** não forem fornecidos pelo usuário
 1. ⛔ Retorna erro 400 se o campo **date** for um date inválido
 1. ✅ Retorna erro 500 se der erro ao tentar criar o débito
