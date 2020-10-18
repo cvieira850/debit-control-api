@@ -6,6 +6,7 @@
   "author": "Caio Vieira <caiodmvieiragithub@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev:server": "ts-node-dev src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "yarn test -- --watch -c jest-unit-config.js",
@@ -19,6 +20,7 @@
     "@types/jest": "^26.0.14",
     "@types/node": "^14.11.10",
     "@types/supertest": "^2.0.10",
+    "@types/swagger-ui-express": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "3",
     "eslint": "^7.11.0",
     "eslint-config-standard-with-typescript": "^19.0.1",
@@ -40,6 +42,7 @@
     "axios": "^0.20.0",
     "express": "^4.17.1",
     "pg": "^8.4.1",
+    "swagger-ui-express": "^4.1.4",
     "typeorm": "^0.2.28"
   }
 }
