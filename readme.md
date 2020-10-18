@@ -22,7 +22,7 @@ Primeiro rode o comando do docker
 
 ``` docker-compose up -b```
 
-Depois que o banco estiver online verificar se o banco está com a extensão uuid-ossp, caso não esteja instalar ela
+Verifique se você tem criado os bancos de dados, caso não tenha crie  debitcontrol e debitcontrol_tests
 
 # Linux
 Caso esteja usando linux, após rodar o comando docker-compose up -b utilize esse comando
