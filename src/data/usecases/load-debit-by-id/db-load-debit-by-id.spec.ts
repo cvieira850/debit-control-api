@@ -2,21 +2,38 @@ import { DebitModel } from './db-load-debit-by-id-protocols'
 import { LoadDebitByIdRepository } from '../../protocols/debit/load-debit-by-id-repository'
 import { DbLoadDebitById } from './db-load-debit-by-id'
 
+const makeFakeDebit = (): DebitModel => ({
+  id: 'any_debit_id',
+  clientId: 'any_clientId',
+  reason: 'any_reason',
+  date: 'any_date',
+  value: 'any_value'
+})
+
+const makeLoadDebitByIdRepository = (): LoadDebitByIdRepository => {
+  class LoadDebitByIdRepositoryStub implements LoadDebitByIdRepository {
+    async loadById (id: string): Promise<DebitModel> {
+      return new Promise(resolve => resolve(makeFakeDebit()))
+    }
+  }
+  return new LoadDebitByIdRepositoryStub()
+}
+
+interface SutTypes {
+  sut: DbLoadDebitById
+  loadDebitByIdRepositoryStub: LoadDebitByIdRepository
+}
+const makeSut = (): SutTypes => {
+  const loadDebitByIdRepositoryStub = makeLoadDebitByIdRepository()
+  const sut = new DbLoadDebitById(loadDebitByIdRepositoryStub)
+  return {
+    sut,
+    loadDebitByIdRepositoryStub
+  }
+}
 describe('DbLoadDebitById usecase', () => {
   test('Should call LoadDebitByIdRepository with correct id', async () => {
-    class LoadDebitByIdRepositoryStub implements LoadDebitByIdRepository {
-      async loadById (id: string): Promise<DebitModel> {
-        return new Promise(resolve => resolve({
-          id: 'any_debit_id',
-          clientId: 'any_clientId',
-          reason: 'any_reason',
-          date: 'any_date',
-          value: 'any_value'
-        }))
-      }
-    }
-    const loadDebitByIdRepositoryStub = new LoadDebitByIdRepositoryStub()
-    const sut = new DbLoadDebitById(loadDebitByIdRepositoryStub)
+    const { sut,loadDebitByIdRepositoryStub } = makeSut()
     const loadByIdSpy = jest.spyOn(loadDebitByIdRepositoryStub,'loadById')
     await sut.loadById('any_id')
     expect(loadByIdSpy).toHaveBeenCalledWith('any_id')
