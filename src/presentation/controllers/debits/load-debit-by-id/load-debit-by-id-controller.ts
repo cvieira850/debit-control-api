@@ -5,7 +5,8 @@ export class LoadDebitByIdController implements Controller {
   constructor (private readonly loadDebitById: LoadDebitById) {}
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const debit = await this.loadDebitById.load(httpRequest.params.debitId)
+      const { id } = httpRequest.params
+      const debit = await this.loadDebitById.loadById(id)
       return ok(debit)
     } catch (error) {
       return serverError(error)

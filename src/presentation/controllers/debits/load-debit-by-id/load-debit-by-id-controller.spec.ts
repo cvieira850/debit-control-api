@@ -4,7 +4,7 @@ import { serverError,ok } from '../../../helpers/http/http-helpers'
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
-    debitId: 'any_debit_id'
+    id: 'any_debit_id'
   }
 })
 const makeFakeDebit = (): DebitModel => ({
@@ -16,12 +16,13 @@ const makeFakeDebit = (): DebitModel => ({
 })
 const makeLoadDebitById = (): LoadDebitById => {
   class LoadDebitByIdStub implements LoadDebitById {
-    async load (id: string): Promise<DebitModel> {
+    async loadById (id: string): Promise<DebitModel> {
       return new Promise(resolve => resolve(makeFakeDebit()))
     }
   }
   return new LoadDebitByIdStub()
 }
+
 interface SutTypes {
   sut: LoadDebitByIdController
   loadDebitByIdStub: LoadDebitById
@@ -38,14 +39,14 @@ const makeSut = (): SutTypes => {
 describe('LoadDebitById Controller', () => {
   test('Should call LoadDebitById with corrrect id', async () => {
     const { sut,loadDebitByIdStub } = makeSut()
-    const loadByIdSpy = jest.spyOn(loadDebitByIdStub,'load')
+    const loadByIdSpy = jest.spyOn(loadDebitByIdStub,'loadById')
     await sut.handle(makeFakeRequest())
     expect(loadByIdSpy).toHaveBeenCalledWith('any_debit_id')
   })
 
   test('Should throw if LoadDebitById throws', async () => {
     const { sut,loadDebitByIdStub } = makeSut()
-    jest.spyOn(loadDebitByIdStub,'load').mockImplementationOnce(() => {
+    jest.spyOn(loadDebitByIdStub,'loadById').mockImplementationOnce(() => {
       throw new Error()
     })
     const httpResponse = await sut.handle(makeFakeRequest())

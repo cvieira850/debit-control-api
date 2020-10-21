@@ -1,5 +1,5 @@
 import { DebitModel } from '../models/debit'
 
 export interface LoadDebitById {
-  load: (id: string) => Promise<DebitModel>
+  loadById: (id: string) => Promise<DebitModel>
 }
