@@ -54,4 +54,11 @@ describe('DbLoadDebits Usecase', () => {
     const debits = await sut.load()
     expect(debits).toEqual(makeFakeDebits())
   })
+
+  test('Should trhow if LoadDebitByIdRepository throws', async () => {
+    const { sut, loadDebitsRepositoryStub } = makeSut()
+    jest.spyOn(loadDebitsRepositoryStub,'load').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    const promise = sut.load()
+    await expect(promise).rejects.toThrow()
+  })
 })
