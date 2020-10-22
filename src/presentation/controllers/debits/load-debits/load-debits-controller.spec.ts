@@ -1,6 +1,7 @@
 import { LoadDebits,DebitModel, HttpRequest } from './load-debits-protocols'
 import { LoadDebitsController } from './load-debits-controller'
-import { ok } from '../../../helpers/http/http-helpers'
+import { ok, serverError } from '../../../helpers/http/http-helpers'
+import { ServerError } from '../../../errors'
 
 const makeFakeRequest = (): HttpRequest => ({ body: {} })
 
@@ -46,5 +47,14 @@ describe('LoadDebits Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(ok(makeFakeArrayDebits()))
+  })
+
+  test('Should throw if LoadDebits throws', async () => {
+    const { sut, loadDebitsStub } = makeSut()
+    jest.spyOn(loadDebitsStub,'load').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
