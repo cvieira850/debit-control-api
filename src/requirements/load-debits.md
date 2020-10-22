@@ -2,7 +2,8 @@
 
 > ## Caso de sucesso:
 1. ⛔ Recebe uma requisição do tipo **GET** na rota **/api/debits/**
-2. ⛔ Retorna 200 
+1. ✅ Retorna 200 se tiver débitos
+1. ⛔ Retorna 204 se não tiver débitos
 
 
 > ## Exceções:
