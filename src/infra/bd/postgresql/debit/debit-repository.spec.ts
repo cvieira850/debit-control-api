@@ -57,7 +57,7 @@ describe('DebitRepository', () => {
       })
       const debit = await sut.loadById(res.id.toString())
       expect(debit).toBeTruthy()
-      expect(debit.id).toBe(res.id.toString())
+      expect(debit.id).toBe(res.id)
       expect(debit.clientId).toBe('any_id')
       expect(debit.reason).toBe('any_reason')
       expect(debit.date).toBe('any_date')
@@ -68,6 +68,32 @@ describe('DebitRepository', () => {
 
       const debit = await sut.loadById('4')
       expect(debit).toBeNull()
+    })
+  })
+  describe('load()', () => {
+    test('Should load an array of debits on success', async () => {
+      const sut = new DebitRepository()
+      await sut.add({
+        clientId: 'any_id',
+        reason: 'any_reason',
+        date: 'any_date',
+        value: 'any_value'
+      })
+      await sut.add({
+        clientId: 'any_id',
+        reason: 'any_reason',
+        date: 'any_date',
+        value: 'any_value'
+      })
+      const debit = await sut.load()
+      expect(debit).toBeTruthy()
+      expect(debit.length).toBe(2)
+    })
+    test('Should return an empty array if no debit is returned on load method', async () => {
+      const sut = new DebitRepository()
+      const debit = await sut.load()
+      expect(debit).toBeTruthy()
+      expect(debit.length).toBe(0)
     })
   })
 })

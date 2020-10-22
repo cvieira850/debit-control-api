@@ -5,14 +5,14 @@ import { DbLoadDebits } from './db-load-debits'
 const makeFakeDebits = (): DebitModel[] => (
   [
     {
-      id: 'any_debit_id',
+      id: 2,
       clientId: 'any_clientId',
       reason: 'any_reason',
       date: 'any_date',
       value: 'any_value'
     },
     {
-      id: 'other_debit_id',
+      id: 3,
       clientId: 'any_clientId',
       reason: 'any_reason',
       date: 'any_date',
