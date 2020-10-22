@@ -9,6 +9,7 @@ export class LoadDebitByIdController implements Controller {
       const debit = await this.loadDebitById.loadById(id)
       return ok(debit)
     } catch (error) {
+      console.log(error)
       return serverError(error)
     }
   }

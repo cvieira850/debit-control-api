@@ -63,5 +63,11 @@ describe('DebitRepository', () => {
       expect(debit.date).toBe('any_date')
       expect(debit.value).toBe('any_value')
     })
+    test('Should return null if load debit by id cannot find a debit', async () => {
+      const sut = new DebitRepository()
+
+      const debit = await sut.loadById('4')
+      expect(debit).toBeNull()
+    })
   })
 })

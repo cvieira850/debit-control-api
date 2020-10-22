@@ -17,7 +17,10 @@ export class DebitRepository implements AddDebitRepository, LoadDebitByIdReposit
   async loadById (idData: string): Promise<DebitModel> {
     const DebitRepository = getRepository(Debit)
     const debitLoaded = await DebitRepository.findOne(idData)
-    const { id, ...debitLoadedValues } = debitLoaded
-    return Object.assign({}, debitLoadedValues, { id: id.toString() })
+    if (debitLoaded) {
+      const { id, ...debitLoadedValues } = debitLoaded
+      return Object.assign({}, debitLoadedValues, { id: id.toString() })
+    }
+    return null
   }
 }
