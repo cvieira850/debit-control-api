@@ -2,10 +2,28 @@ import { DebitModel } from './db-load-debits-protocols'
 import { LoadDebitsRepository } from '../../protocols/debit/load-debits-repository'
 import { DbLoadDebits } from './db-load-debits'
 
+const makeFakeDebits = (): DebitModel[] => (
+  [
+    {
+      id: 'any_debit_id',
+      clientId: 'any_clientId',
+      reason: 'any_reason',
+      date: 'any_date',
+      value: 'any_value'
+    },
+    {
+      id: 'other_debit_id',
+      clientId: 'any_clientId',
+      reason: 'any_reason',
+      date: 'any_date',
+      value: 'any_value'
+    }
+  ])
+
 const makeLoadDebits = (): LoadDebitsRepository => {
   class LoadDebitsRepositoryStub implements LoadDebitsRepository {
     async load (): Promise<DebitModel[]> {
-      return new Promise(resolve => resolve([]))
+      return new Promise(resolve => resolve(makeFakeDebits()))
     }
   }
   return new LoadDebitsRepositoryStub()
@@ -29,5 +47,11 @@ describe('DbLoadDebits Usecase', () => {
     const loadSpy = jest.spyOn(loadDebitsRepositoryStub,'load')
     await sut.load()
     expect(loadSpy).toHaveBeenCalledWith()
+  })
+
+  test('Should return an array of debits on success', async () => {
+    const { sut } = makeSut()
+    const debits = await sut.load()
+    expect(debits).toEqual(makeFakeDebits())
   })
 })
