@@ -89,5 +89,11 @@ describe('DebitRepository', () => {
       expect(debit).toBeTruthy()
       expect(debit.length).toBe(2)
     })
+    test('Should return an empty array if no debit is returned on load method', async () => {
+      const sut = new DebitRepository()
+      const debit = await sut.load()
+      expect(debit).toBeTruthy()
+      expect(debit.length).toBe(0)
+    })
   })
 })
