@@ -1,6 +1,6 @@
 import { LoadDebits,DebitModel, HttpRequest } from './load-debits-protocols'
 import { LoadDebitsController } from './load-debits-controller'
-import { ok, serverError } from '../../../helpers/http/http-helpers'
+import { ok, serverError, noContent } from '../../../helpers/http/http-helpers'
 import { ServerError } from '../../../errors'
 
 const makeFakeRequest = (): HttpRequest => ({ body: {} })
@@ -56,5 +56,11 @@ describe('LoadDebits Controller', () => {
     })
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+  test('Should retunr 204 if no debit is returned', async () => {
+    const { sut, loadDebitsStub } = makeSut()
+    jest.spyOn(loadDebitsStub,'load').mockReturnValueOnce(new Promise(resolve => resolve([])))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(noContent())
   })
 })
