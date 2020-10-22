@@ -7,7 +7,7 @@ O objetivo desse projeto é o relacionamento de dívidas com nossos
 clientes (usuários do JSONPlaceholder). Cada usuário é uma pessoa com dívidas.
 
 > ## APIs implementadas no sistema: 
-1. [Adiciona Débito](./requirements/add-debit.md)
+1. [Adiciona Débito](./src/requirements/add-debit.md)
 
 # 🚧 Instalação
 **Para rodar o projeto é necessário ter [Node.js](https://nodejs.org/en/download/) , [Yarn](https://yarnpkg.com/), [Docker](https://docs.docker.com/docker-for-windows/install/) e clonar o projeto**

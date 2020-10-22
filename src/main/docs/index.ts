@@ -1,12 +1,12 @@
-import { DebitPath } from './paths'
+import { DebitPath, LoadDebitByIdPath } from './paths'
 import { badRequest, serverError, notFound } from './components'
 import { DebitParamsSchema, debitSchema, errorSchema } from './schemas'
 
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Amantes dos Pets',
-    descriptiom: 'Marketplace de produtos para pets',
+    title: 'Debit Controller',
+    descriptiom: 'API para fazer operações nos débitos dos clientes',
     version: '1.0.0'
   },
   license: {
@@ -27,7 +27,8 @@ export default {
     }
   ],
   paths: {
-    '/debits': DebitPath
+    '/debits': DebitPath,
+    '/debits/{id}': LoadDebitByIdPath
   },
   schemas: {
     error: errorSchema,

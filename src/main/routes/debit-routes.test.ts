@@ -39,4 +39,21 @@ describe('Debit Routes', () => {
         .expect(200)
     })
   })
+  describe('GET /debits/id', () => {
+    test('Should return 200 on load debit by id ', async () => {
+      const res = await request(app)
+        .post('/api/debits')
+        .send({
+          clientId: '1',
+          reason: 'any_reason',
+          date: '2020-10-10',
+          value: '10,00'
+        })
+      const { id } = res.body
+      await request(app)
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        .get(`/api/debits/${id}`)
+        .expect(200)
+    })
+  })
 })

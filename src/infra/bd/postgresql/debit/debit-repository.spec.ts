@@ -46,4 +46,28 @@ describe('DebitRepository', () => {
       expect(debit.value).toBe('any_value')
     })
   })
+  describe('loadById()', () => {
+    test('Should load a debit by id on success', async () => {
+      const sut = new DebitRepository()
+      const res = await sut.add({
+        clientId: 'any_id',
+        reason: 'any_reason',
+        date: 'any_date',
+        value: 'any_value'
+      })
+      const debit = await sut.loadById(res.id.toString())
+      expect(debit).toBeTruthy()
+      expect(debit.id).toBe(res.id.toString())
+      expect(debit.clientId).toBe('any_id')
+      expect(debit.reason).toBe('any_reason')
+      expect(debit.date).toBe('any_date')
+      expect(debit.value).toBe('any_value')
+    })
+    test('Should return null if load debit by id cannot find a debit', async () => {
+      const sut = new DebitRepository()
+
+      const debit = await sut.loadById('4')
+      expect(debit).toBeNull()
+    })
+  })
 })
