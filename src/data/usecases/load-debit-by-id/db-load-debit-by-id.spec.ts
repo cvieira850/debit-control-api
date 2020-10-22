@@ -3,7 +3,7 @@ import { LoadDebitByIdRepository } from '../../protocols/debit/load-debit-by-id-
 import { DbLoadDebitById } from './db-load-debit-by-id'
 
 const makeFakeDebit = (): DebitModel => ({
-  id: 'any_debit_id',
+  id: 2,
   clientId: 'any_clientId',
   reason: 'any_reason',
   date: 'any_date',

@@ -2,7 +2,7 @@ import { AddDebitModel, DebitModel, AddDebitRepository, ClientModel,LoadClientBy
 import { DbAddDebit } from './db-add-debit'
 
 const makeFakeDebit = (): DebitModel => ({
-  id: 'any_id',
+  id: 2,
   clientId: 'any_clientId',
   reason: 'any_reason',
   date: 'any_date',
