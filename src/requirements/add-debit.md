@@ -1,7 +1,7 @@
 # Cadastro da store
 
 > ## Caso de sucesso:
-1. ✅ Recebe uma requisição do tipo **POST** na rota **/api/store **
+1. ✅ Recebe uma requisição do tipo **POST** na rota **/api/debits **
 2. ✅ Valida dados obrigatórios **clientId**,**reason**, **date**, **value**
 3. ✅ Valida que o campo **date** é um e-mail válido
 4. ✅ Retorna 200 com o debito criado
