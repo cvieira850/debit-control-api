@@ -1,6 +1,6 @@
-import { DebitPath, LoadDebitByIdPath } from './paths'
+import { DebitPath, LoadDebitByIdPath, LoadDebitsPath } from './paths'
 import { badRequest, serverError, notFound } from './components'
-import { DebitParamsSchema, debitSchema, errorSchema } from './schemas'
+import { DebitParamsSchema, debitSchema, errorSchema, debitsSchema } from './schemas'
 
 export default {
   openapi: '3.0.0',
@@ -28,12 +28,14 @@ export default {
   ],
   paths: {
     '/debits': DebitPath,
-    '/debits/{id}': LoadDebitByIdPath
+    '/debits/{id}': LoadDebitByIdPath,
+    '/debits/': LoadDebitsPath
   },
   schemas: {
     error: errorSchema,
     debit: debitSchema,
-    debitParams: DebitParamsSchema
+    debitParams: DebitParamsSchema,
+    debits: debitsSchema
   },
   components: {
     badRequest,
