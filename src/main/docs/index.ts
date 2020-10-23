@@ -1,4 +1,4 @@
-import { DebitPath, LoadDebitByIdPath, LoadDebitsPath } from './paths'
+import { DebitPath, LoadDebitByIdPath, LoadDebitsPath, DeleteDebitPath } from './paths'
 import { badRequest, serverError, notFound } from './components'
 import { DebitParamsSchema, debitSchema, errorSchema, debitsSchema } from './schemas'
 
@@ -29,7 +29,8 @@ export default {
   paths: {
     '/debits': DebitPath,
     '/debits/{id}': LoadDebitByIdPath,
-    '/debits/': LoadDebitsPath
+    '/debits/': LoadDebitsPath,
+    '/debits/{id}/': DeleteDebitPath
   },
   schemas: {
     error: errorSchema,

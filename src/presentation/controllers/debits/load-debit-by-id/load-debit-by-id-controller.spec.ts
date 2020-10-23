@@ -4,11 +4,11 @@ import { serverError,ok } from '../../../helpers/http/http-helpers'
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
-    id: 'any_debit_id'
+    id: 2
   }
 })
 const makeFakeDebit = (): DebitModel => ({
-  id: 'any_debit_id',
+  id: 2,
   clientId: 'any_clientId',
   reason: 'any_reason',
   date: 'any_date',
@@ -41,7 +41,7 @@ describe('LoadDebitById Controller', () => {
     const { sut,loadDebitByIdStub } = makeSut()
     const loadByIdSpy = jest.spyOn(loadDebitByIdStub,'loadById')
     await sut.handle(makeFakeRequest())
-    expect(loadByIdSpy).toHaveBeenCalledWith('any_debit_id')
+    expect(loadByIdSpy).toHaveBeenCalledWith(2)
   })
 
   test('Should throw if LoadDebitById throws', async () => {

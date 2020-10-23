@@ -96,4 +96,17 @@ describe('DebitRepository', () => {
       expect(debit.length).toBe(0)
     })
   })
+  describe('delete()', () => {
+    test('Should delete a debit on success', async () => {
+      const sut = new DebitRepository()
+      const res = await sut.add({
+        clientId: 'any_id',
+        reason: 'any_reason',
+        date: 'any_date',
+        value: 'any_value'
+      })
+      const debit = await sut.delete(res.id)
+      expect(debit).toEqual(null)
+    })
+  })
 })

@@ -7,14 +7,14 @@ const makeFakeRequest = (): HttpRequest => ({ body: {} })
 
 const makeFakeArrayDebits = (): DebitModel[] => ([
   {
-    id: 'any_id',
+    id: 1,
     clientId: 'any_clientId',
     reason: 'any_reason',
     date: 'any_date',
     value: 'any_value'
   },
   {
-    id: 'other_id',
+    id: 2,
     clientId: 'other_clientId',
     reason: 'other_reason',
     date: 'other_date',

@@ -80,4 +80,21 @@ describe('Debit Routes', () => {
         .expect(200)
     })
   })
+  describe('DELETE /debits/id', () => {
+    test('Should return 204 on load debits', async () => {
+      const res = await request(app)
+        .post('/api/debits')
+        .send({
+          clientId: '1',
+          reason: 'any_reason',
+          date: '2020-10-10',
+          value: '10,00'
+        })
+      const { id } = res.body
+      await request(app)
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        .delete(`/api/debits/${id}`)
+        .expect(204)
+    })
+  })
 })
