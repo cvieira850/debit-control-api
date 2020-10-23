@@ -56,4 +56,28 @@ describe('Debit Routes', () => {
         .expect(200)
     })
   })
+  describe('GET /debits', () => {
+    test('Should return 200 on load debits', async () => {
+      await request(app)
+        .post('/api/debits')
+        .send({
+          clientId: '1',
+          reason: 'any_reason',
+          date: '2020-10-10',
+          value: '10,00'
+        })
+      await request(app)
+        .post('/api/debits')
+        .send({
+          clientId: '1',
+          reason: 'any_reason2',
+          date: '2020-11-10',
+          value: '35,00'
+        })
+      await request(app)
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        .get('/api/debits/')
+        .expect(200)
+    })
+  })
 })
