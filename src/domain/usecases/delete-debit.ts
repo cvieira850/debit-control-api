@@ -1,4 +1,4 @@
 
 export interface DeleteDebit {
-  delete: (id: string) => Promise<void>
+  delete: (id: number) => Promise<void>
 }
