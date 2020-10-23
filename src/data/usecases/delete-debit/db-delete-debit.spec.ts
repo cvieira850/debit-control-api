@@ -29,4 +29,11 @@ describe('DbDeleteDebit usecase', () => {
     await sut.delete(1)
     expect(deleteSpy).toHaveBeenCalledWith(1)
   })
+
+  test('Should trhow if DeleteDebitRepositoy throws', async () => {
+    const { sut, deleteDebitRepositoryStub } = makeSut()
+    jest.spyOn(deleteDebitRepositoryStub,'delete').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    const promise = sut.delete(1)
+    await expect(promise).rejects.toThrow()
+  })
 })
