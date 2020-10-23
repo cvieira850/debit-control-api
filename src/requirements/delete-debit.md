@@ -1,4 +1,4 @@
-# Listar débito  pelo Id
+# Deleta um débito
 
 > ## Caso de sucesso:
 1. ✅ Recebe uma requisição do tipo **delete** na rota **/api/debits/{debit_id}/**

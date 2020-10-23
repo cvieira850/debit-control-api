@@ -12,6 +12,9 @@ clientes (usuários do JSONPlaceholder). Cada usuário é uma pessoa com dívida
 3. [Carrega um Débito pelo id](./src/requirements/load-debit-by-id.md)
 4. [Carrega todos os Débitos](./src/requirements/load-debits.md)
 
+### modelos das apis implementadas podem ser verificadas pela extensão drawio do vscode
+Local do arquivo Requirements/drawio
+
 # 🚧 Instalação
 **Para rodar o projeto é necessário ter [Node.js](https://nodejs.org/en/download/) , [Yarn](https://yarnpkg.com/), [Docker](https://docs.docker.com/docker-for-windows/install/) e clonar o projeto**
 
