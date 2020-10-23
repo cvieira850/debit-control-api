@@ -1,5 +1,5 @@
 import { Controller,HttpRequest,HttpResponse, DeleteDebit } from './delete-debit-protocols'
-import { serverError } from '../../../helpers/http/http-helpers'
+import { serverError, noContent } from '../../../helpers/http/http-helpers'
 
 export class DeleteDebitController implements Controller {
   constructor (private readonly deleteDebit: DeleteDebit) {}
@@ -7,7 +7,7 @@ export class DeleteDebitController implements Controller {
     try {
       const { id } = httpRequest.params
       await this.deleteDebit.delete(id)
-      return null
+      return noContent()
     } catch (error) {
       return serverError(error)
     }
