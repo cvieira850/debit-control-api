@@ -36,4 +36,10 @@ describe('DbDeleteDebit usecase', () => {
     const promise = sut.delete(1)
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return null on success', async () => {
+    const { sut } = makeSut()
+    const debit = await sut.delete(1)
+    expect(debit).toBeNull()
+  })
 })
