@@ -21,7 +21,7 @@ const makeFakeRequest = (): HttpRequest => ({
   }
 })
 const makeFakeDebit = (): DebitModel => ({
-  id: 'any_id',
+  id: 1,
   clientId: 'any_clientId',
   reason: 'any_reason',
   date: 'any_date',
