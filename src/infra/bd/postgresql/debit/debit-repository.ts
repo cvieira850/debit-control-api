@@ -26,7 +26,6 @@ export class DebitRepository implements AddDebitRepository, LoadDebitByIdReposit
   async load (): Promise<DebitModel[]> {
     const DebitRepository = getRepository(Debit)
     const debits = await DebitRepository.find()
-    console.log(debits)
     return debits
   }
 }
