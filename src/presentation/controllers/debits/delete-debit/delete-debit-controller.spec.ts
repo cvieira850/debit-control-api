@@ -1,5 +1,6 @@
 import { DeleteDebit, HttpRequest } from './delete-debit-protocols'
 import { DeleteDebitController } from './delete-debit-controller'
+import { serverError } from '../../../helpers/http/http-helpers'
 
 const makeRequest = (): HttpRequest => ({
   params: { id: 1 }
@@ -34,5 +35,14 @@ describe('DeleteDebit Controller', () => {
     const deleteSpy = jest.spyOn(deleteDebitStub,'delete')
     await sut.handle(makeRequest())
     expect(deleteSpy).toHaveBeenCalledWith(1)
+  })
+
+  test('Should throw if DeleteDebit throws', async () => {
+    const { sut,deleteDebitStub } = makeSut()
+    jest.spyOn(deleteDebitStub,'delete').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle(makeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
