@@ -8,6 +8,9 @@ clientes (usuários do JSONPlaceholder). Cada usuário é uma pessoa com dívida
 
 > ## APIs implementadas no sistema: 
 1. [Adiciona Débito](./src/requirements/add-debit.md)
+2. [Deleta Débito](./src/requirements/delete-debit.md)
+3. [Carrega um Débito pelo id](./src/requirements/load-debit-by-id.md)
+4. [Carrega todos os Débitos](./src/requirements/load-debits.md)
 
 # 🚧 Instalação
 **Para rodar o projeto é necessário ter [Node.js](https://nodejs.org/en/download/) , [Yarn](https://yarnpkg.com/), [Docker](https://docs.docker.com/docker-for-windows/install/) e clonar o projeto**
