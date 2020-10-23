@@ -56,6 +56,8 @@ Por último execute o comando
 
 ``` yarn test:ci ```
 
+## Documentação da API com Swagger
+  rota localhost:5050/api-docs
 ## Bibliotecas e Ferramentas
 
 * Yarn
